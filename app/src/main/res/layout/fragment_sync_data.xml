@@ -1,0 +1,160 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vijayneetigroup.root.jar.SyncData">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="35dp"
+        android:text="Synchronising Status"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView20"
+        android:layout_marginTop="33dp"
+        android:id="@+id/tableLayout2">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView20"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_alignTop="@+id/tableLayout2"
+        android:layout_marginTop="38dp"
+        android:text="Customer"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="Route"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView21"
+        android:layout_alignLeft="@+id/textView21"
+        android:layout_alignStart="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="Entries"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView22"
+        android:layout_alignLeft="@+id/textView22"
+        android:layout_alignStart="@+id/textView22" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/textView21"
+        android:layout_marginLeft="85dp"
+        android:layout_marginStart="85dp"
+        android:layout_toEndOf="@+id/textView21"
+        android:layout_toRightOf="@+id/textView21" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/textView22"
+        android:layout_alignLeft="@+id/progressBar2"
+        android:layout_alignStart="@+id/progressBar2" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/textView23"
+        android:layout_alignLeft="@+id/progressBar3"
+        android:layout_alignStart="@+id/progressBar3" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView20"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_toEndOf="@+id/progressBar2"
+        android:layout_toRightOf="@+id/progressBar2"
+        android:text="Pending..." />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressBar2"
+        android:layout_toEndOf="@+id/progressBar2"
+        android:layout_toRightOf="@+id/progressBar2"
+        android:text="Done" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView22"
+        android:layout_toEndOf="@+id/progressBar3"
+        android:layout_toRightOf="@+id/progressBar3"
+        android:text="Done" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView23"
+        android:layout_toEndOf="@+id/progressBar4"
+        android:layout_toRightOf="@+id/progressBar4"
+        android:text="Done" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/textView25"
+        android:layout_alignLeft="@+id/textView24"
+        android:layout_alignStart="@+id/textView24"
+        android:text="Sync"
+        android:visibility="invisible" />
+
+</RelativeLayout>

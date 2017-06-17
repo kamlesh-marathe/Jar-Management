@@ -1,0 +1,166 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_home"
+    tools:context="com.vijayneetigroup.root.jar.Front">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="29dp"
+        android:text="Welcome"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView41"
+        android:layout_alignStart="@+id/textView41"
+        android:layout_below="@+id/textView41"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:text="Total Jar"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView42"
+        android:layout_alignStart="@+id/textView42"
+        android:layout_below="@+id/textView42"
+        android:layout_marginTop="24dp"
+        android:text="Filled Jar"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView43"
+        android:layout_alignStart="@+id/textView43"
+        android:layout_below="@+id/textView43"
+        android:layout_marginTop="28dp"
+        android:text="Total Bottle"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView44"
+        android:layout_alignStart="@+id/textView44"
+        android:layout_below="@+id/textView44"
+        android:layout_marginTop="28dp"
+        android:text="Filled Bottle "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView50"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView45"
+        android:layout_marginLeft="65dp"
+        android:layout_marginStart="65dp"
+        android:layout_toEndOf="@+id/textView45"
+        android:layout_toRightOf="@+id/textView45"
+        android:text="0"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView51"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView45"
+        android:layout_alignLeft="@+id/textView50"
+        android:layout_alignStart="@+id/textView50"
+        android:text="0"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView44"
+        android:layout_alignLeft="@+id/textView51"
+        android:layout_alignStart="@+id/textView51"
+        android:text="0"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView42"
+        android:layout_alignLeft="@+id/textView52"
+        android:layout_alignStart="@+id/textView52"
+        android:text="0"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/progressBar6"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/textView45"
+        android:layout_toRightOf="@+id/textView41"
+        android:layout_toEndOf="@+id/textView41" />
+
+    <ProgressBar
+        android:id="@+id/progressBar7"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/progressBar6"
+        android:layout_alignLeft="@+id/progressBar6"
+        android:layout_alignRight="@+id/progressBar6"
+        android:layout_alignStart="@+id/progressBar6"
+        android:layout_below="@+id/progressBar6"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jars"
+        android:textStyle="bold"
+        android:layout_above="@+id/progressBar7"
+        android:layout_alignLeft="@+id/textView41"
+        android:layout_alignStart="@+id/textView41" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressBar7"
+        android:layout_alignLeft="@+id/textView40"
+        android:layout_alignStart="@+id/textView40"
+        android:text="Bottle"
+        android:textStyle="bold" />
+
+</RelativeLayout>
