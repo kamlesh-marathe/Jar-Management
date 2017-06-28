@@ -630,6 +630,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=getWritableDatabase();
         db.insert(ENTRY_TABLE_NAME,null,values);
         db.close();
+        chkdbfull();
+    }
+
+    private void chkdbfull() {
+        String query="SELECT "+ENTRY_COLUMN_ID+" FROM "+ENTRY_TABLE_NAME;
+        SQLiteDatabase db=getReadableDatabase();
+        Cursor cursor=db.rawQuery(query,null);
+        Integer count=cursor.getCount();
+        if (count>500)
+        {
+            Toast.makeText(cont, "Please Sync, your Database is almost Full...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private Integer getcustofid(String custname) {
