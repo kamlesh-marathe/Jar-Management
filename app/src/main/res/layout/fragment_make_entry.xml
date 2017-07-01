@@ -67,140 +67,86 @@
         android:layout_toRightOf="@+id/textView29"
         android:hint="Enter Name" />
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView29"
-        android:layout_alignStart="@+id/textView29"
-        android:layout_below="@+id/autoCompleteTextView"
-        android:layout_marginTop="98dp"
-        android:text="No of Bottle" />
-
-    <CheckBox
-        android:id="@+id/checkBox4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox3"
-        android:layout_alignStart="@+id/checkBox3"
-        android:layout_below="@+id/checkBox3"
-        android:layout_marginTop="31dp"
-        android:text="No of Jars" />
-
-    <EditText
-        android:id="@+id/editText11"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/checkBox3"
-        android:layout_alignLeft="@+id/autoCompleteTextView"
-        android:layout_alignStart="@+id/autoCompleteTextView"
-        android:ems="10"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/editText12"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/checkBox4"
-        android:layout_alignLeft="@+id/editText11"
-        android:layout_alignStart="@+id/editText11"
-        android:ems="10"
-        android:inputType="number" />
-
     <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_below="@+id/textView33"
-        android:layout_alignRight="@+id/editText12"
-        android:layout_alignEnd="@+id/editText12" />
-
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0 Rs"
-        android:textStyle="bold"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp"
-        android:layout_alignBaseline="@+id/checkBox3"
-        android:layout_alignBottom="@+id/checkBox3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView29"
+        android:layout_alignStart="@+id/textView29"
+        android:layout_marginBottom="109dp" />
 
     <TextView
         android:id="@+id/textView32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView31"
-        android:layout_alignStart="@+id/textView31"
-        android:layout_alignTop="@+id/checkBox4"
-        android:text="0 Rs"
+        android:layout_alignLeft="@+id/textView29"
+        android:layout_alignStart="@+id/textView29"
+        android:layout_below="@+id/autoCompleteTextView"
+        android:layout_marginTop="32dp"
+        android:text="Choose type"
         android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView32"
+        android:layout_alignLeft="@+id/autoCompleteTextView"
+        android:layout_alignStart="@+id/autoCompleteTextView" />
 
     <TextView
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Toatal 0 Rs"
-        android:textStyle="bold"
-        android:layout_below="@+id/editText14"
-        android:layout_alignRight="@+id/textView32"
-        android:layout_alignEnd="@+id/textView32"
-        android:layout_marginTop="31dp" />
+        android:layout_alignLeft="@+id/textView32"
+        android:layout_alignStart="@+id/textView32"
+        android:layout_below="@+id/textView32"
+        android:layout_marginTop="38dp"
+        android:text="Issuing item"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText11"
-        android:layout_alignLeft="@+id/editText11"
-        android:layout_alignStart="@+id/editText11"
-        android:text="Issuing\nQuantity"
-        android:textStyle="bold" />
+        android:layout_marginTop="40dp"
+        android:text="Returning item"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView33"
+        android:layout_alignLeft="@+id/textView33"
+        android:layout_alignStart="@+id/textView33" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView36"
+        android:layout_alignLeft="@+id/spinner3"
+        android:layout_alignStart="@+id/spinner3"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editText11"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView36"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_alignStart="@+id/editText3"
+        android:ems="10"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cost"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/textView49"
-        android:layout_alignLeft="@+id/textView31"
-        android:layout_alignStart="@+id/textView31" />
-
-    <TextView
-        android:id="@+id/textView49"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Returnig\nQuantity"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/textView36"
-        android:layout_alignBottom="@+id/textView36"
-        android:layout_toRightOf="@+id/textView36"
-        android:layout_toEndOf="@+id/textView36"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp" />
-
-    <EditText
-        android:id="@+id/editText13"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView49"
-        android:layout_alignStart="@+id/textView49"
-        android:layout_below="@+id/textView37"
-        android:ems="10"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/editText14"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText12"
-        android:layout_alignLeft="@+id/editText13"
-        android:layout_alignStart="@+id/editText13"
-        android:ems="10"
-        android:inputType="number" />
+        android:layout_alignLeft="@+id/editText11"
+        android:layout_alignStart="@+id/editText11"
+        android:layout_below="@+id/editText11"
+        android:layout_marginTop="25dp"
+        android:text="Total 0"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -2,14 +2,13 @@ package com.vijayneetigroup.root.jar;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -48,19 +47,21 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String CUSTOMER_COLUMN_ROUTE = "_croute";
     private static final String CUSTOMER_COLUMN_ONID = "_conid";
     private static final String CUSTOMER_COLUMN_BPRC = "_cbprc";
+    private static final String CUSTOMER_COLUMN_BPRC5 = "_cbprc5";
+    private static final String CUSTOMER_COLUMN_BPRC10 = "_cbprc10";
     private static final String CUSTOMER_COLUMN_JARP = "_cjarprc";
+    private static final String CUSTOMER_COLUMN_JARPC = "_cjarcprc";
     private static final String ENTRY_COLUMN_ID = "_eid";
     private static final String ENTRY_COLUMN_CUSTID = "_ecid";
-    private static final String ENTRY_COLUMN_NBTL = "_enbtl";
     private static final String ENTRY_COLUMN_NJAR = "_enjar";
-    private static final String ENTRY_COLUMN_RNBTL = "_ernbtl";
     private static final String ENTRY_COLUMN_RNJAR = "_ernjar";
+    private static final String ENTRY_COLUMN_TYCD = "_etypecode";
     private static final String ENTRY_COLUMN_DATE = "_edate";
     private static final String ENTRY_COLUMN_AMOUNT = "_eamount";
     private static final String JAR_COLUMN_ID = "_jid";
     private static final String JAR_COLUMN_JTLE = "_jtjar";
-    private static final String JAR_COLUMN_BTLE = "_jtbtl";
     private static final String JAR_COLUMN_JFLD = "_jfjar";
+    private static final String JAR_COLUMN_BTLE = "_jtbtl";
     private static final String JAR_COLUMN_BFLD = "_jfbtl";
     private static final String DETAILJAR_COLUMN_ID = "_did";
     private static final String DETAILJAR_COLUMN_CUSTONID = "_dcustonid";
@@ -68,9 +69,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String DETAILJAR_COLUMN_JARISSUED = "_djarish";
     private static final String DETAILJAR_COLUMN_JARRETURNED = "_djarret";
     private static final String DETAILJAR_COLUMN_JARAMOUNT = "_djaramt";
+    private static final String DETAILJAR_COLUMN_CJARISSUED = "_djarcish";
+    private static final String DETAILJAR_COLUMN_CJARRETURNED = "_djarcret";
+    private static final String DETAILJAR_COLUMN_CJARAMOUNT = "_djarcamt";
     private static final String DETAILJAR_COLUMN_BTLISSUED = "_dbtlish";
     private static final String DETAILJAR_COLUMN_BTLRETURNED = "_dbtlret";
     private static final String DETAILJAR_COLUMN_BTLAMOUNT = "_dbtlamt";
+    private static final String DETAILJAR_COLUMN_BTLISSUED5 = "_dbtlish5";
+    private static final String DETAILJAR_COLUMN_BTLRETURNED5 = "_dbtlret5";
+    private static final String DETAILJAR_COLUMN_BTLAMOUNT5 = "_dbtlamt5";
+    private static final String DETAILJAR_COLUMN_BTLISSUED10 = "_dbtlish10";
+    private static final String DETAILJAR_COLUMN_BTLRETURNED10 = "_dbtlret10";
+    private static final String DETAILJAR_COLUMN_BTLAMOUNT10 = "_dbtlamt10";
     private static final String DETAILJAR_COLUMN_PAID = "_dpaid";
 
     Context cont;
@@ -110,7 +120,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 CUSTOMER_COLUMN_ADDRESS + " TEXT," +
                 CUSTOMER_COLUMN_ROUTE + " TEXT," +
                 CUSTOMER_COLUMN_BPRC + " INTEGER," +
-                CUSTOMER_COLUMN_JARP + " INTEGER" +
+                CUSTOMER_COLUMN_BPRC5 + " INTEGER," +
+                CUSTOMER_COLUMN_BPRC10 + " INTEGER," +
+                CUSTOMER_COLUMN_JARP + " INTEGER," +
+                CUSTOMER_COLUMN_JARPC + " INTEGER" +
                 ");";
         Log.d(TAG,"TABLE CREATING "+query);
         db.execSQL(query);
@@ -119,10 +132,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         query = "CREATE TABLE IF NOT EXISTS " + ENTRY_TABLE_NAME + " ( " +
                 ENTRY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ENTRY_COLUMN_CUSTID + " INTEGER," +
-                ENTRY_COLUMN_NBTL + " INTEGER," +
                 ENTRY_COLUMN_NJAR + " INTEGER," +
-                ENTRY_COLUMN_RNBTL + " INTEGER," +
                 ENTRY_COLUMN_RNJAR + " INTEGER," +
+                ENTRY_COLUMN_TYCD + " INTEGER," +
                 ENTRY_COLUMN_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
                 ENTRY_COLUMN_AMOUNT + " INTEGER" +
                 ");";
@@ -137,9 +149,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 DETAILJAR_COLUMN_JARISSUED + " INTEGER," +
                 DETAILJAR_COLUMN_JARRETURNED + " INTEGER," +
                 DETAILJAR_COLUMN_JARAMOUNT + " INTEGER," +
+                DETAILJAR_COLUMN_CJARISSUED + " INTEGER," +
+                DETAILJAR_COLUMN_CJARRETURNED + " INTEGER," +
+                DETAILJAR_COLUMN_CJARAMOUNT + " INTEGER," +
                 DETAILJAR_COLUMN_BTLISSUED + " INTEGER," +
                 DETAILJAR_COLUMN_BTLRETURNED + " INTEGER," +
                 DETAILJAR_COLUMN_BTLAMOUNT + " INTEGER," +
+                DETAILJAR_COLUMN_BTLISSUED5 + " INTEGER," +
+                DETAILJAR_COLUMN_BTLRETURNED5 + " INTEGER," +
+                DETAILJAR_COLUMN_BTLAMOUNT5 + " INTEGER," +
+                DETAILJAR_COLUMN_BTLISSUED10 + " INTEGER," +
+                DETAILJAR_COLUMN_BTLRETURNED10 + " INTEGER," +
+                DETAILJAR_COLUMN_BTLAMOUNT10 + " INTEGER," +
                 DETAILJAR_COLUMN_PAID + " INTEGER" +
                 ");";
         Log.d(TAG,"TABLE CREATING "+query);
@@ -304,7 +325,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                                         String.valueOf(getroutename(jsonObject.getInt("RouteId"),context)),
                                         bprc,
                                         jprc,
-                                        true
+                                        0, 0, 0, true
                                 );
 
                                 dbHandler.addcustdetail(
@@ -312,6 +333,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
                                         Integer.valueOf(jsonObject.getString("NumberOfJar")),
                                         Integer.valueOf(jsonObject.getString("RNumberOfJar")),
                                         Integer.valueOf(jsonObject.getString("AmountOfJar")),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
+                                        Integer.valueOf("0"),
                                         Integer.valueOf("0"),
                                         Integer.valueOf("0"),
                                         Integer.valueOf("0"),
@@ -353,7 +383,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
     }
 
-    private void addcustdetail(Integer custID, Integer numberOfJar, Integer rNumberOfJar, Integer amountOfJar, Integer numberofbtl, Integer rnumberofbtl, Integer amountOfbtl, Integer paidamt) {
+    private void addcustdetail(Integer custID, Integer numberOfJar, Integer rNumberOfJar, Integer amountOfJar, Integer numberofbtl, Integer rnumberofbtl, Integer amountOfbtl, Integer cj1, Integer cj2, Integer cj3, Integer b51, Integer b52, Integer b53, Integer b101, Integer b102, Integer b103, Integer paidamt) {
         ContentValues values=new ContentValues();
         SQLiteDatabase db=getWritableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM "+CUSTOMER_TABLE_NAME+" WHERE "+CUSTOMER_COLUMN_ONID+" = "+custID,null);
@@ -364,16 +394,25 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(DETAILJAR_COLUMN_JARISSUED,numberOfJar);
         values.put(DETAILJAR_COLUMN_JARRETURNED,rNumberOfJar);
         values.put(DETAILJAR_COLUMN_JARAMOUNT,amountOfJar);
+        values.put(DETAILJAR_COLUMN_CJARISSUED,cj1);
+        values.put(DETAILJAR_COLUMN_CJARRETURNED,cj2);
+        values.put(DETAILJAR_COLUMN_CJARAMOUNT,cj3);
         values.put(DETAILJAR_COLUMN_BTLISSUED,numberofbtl);
         values.put(DETAILJAR_COLUMN_BTLRETURNED,rnumberofbtl);
         values.put(DETAILJAR_COLUMN_BTLAMOUNT,amountOfbtl);
+        values.put(DETAILJAR_COLUMN_BTLISSUED5,b51);
+        values.put(DETAILJAR_COLUMN_BTLRETURNED5,b52);
+        values.put(DETAILJAR_COLUMN_BTLAMOUNT5,b53);
+        values.put(DETAILJAR_COLUMN_BTLISSUED10,b101);
+        values.put(DETAILJAR_COLUMN_BTLRETURNED10,b102);
+        values.put(DETAILJAR_COLUMN_BTLAMOUNT10,b103);
         values.put(DETAILJAR_COLUMN_PAID,paidamt);
 
         db.insert(DETAILJAR_TABLE_NAME,null,values);
         db.close();
     }
 
-    public void updatecustdetail(String custname, int number1, int number2, int number3, int number4, int btlsumamt, int jarsumamt) {
+    public void updatecustdetail(String custname, int number1, int number2, int typecode, int amt) {
 
         SQLiteDatabase db=getWritableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM "+CUSTOMER_TABLE_NAME+" WHERE "+CUSTOMER_COLUMN_NAME+" = '"+custname+"'",null);
@@ -383,22 +422,67 @@ public class MyDBHandler extends SQLiteOpenHelper {
         query="SELECT * FROM "+DETAILJAR_TABLE_NAME+" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
         Cursor cursor1=db.rawQuery(query,null);
         cursor1.moveToFirst();
-        Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARISSUED))+number2;
-        Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARRETURNED))+number4;
-        Integer newbtlnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED))+number1;
-        Integer newbtlnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLRETURNED))+number3;
-        Integer newbtlamt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT))+btlsumamt;
-        Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARAMOUNT))+jarsumamt;
 
-        query="UPDATE "+DETAILJAR_TABLE_NAME+
-                " SET "+DETAILJAR_COLUMN_JARISSUED +" = "+newjarnoisued+
-                ", "+DETAILJAR_COLUMN_JARRETURNED +" = "+newjarnoreturn+
-                ", "+DETAILJAR_COLUMN_BTLISSUED +" = "+newbtlnoisued+
-                ", "+DETAILJAR_COLUMN_BTLRETURNED +" = "+newbtlnoreturn+
-                ", "+DETAILJAR_COLUMN_JARAMOUNT +" = "+newjaramt+
-                ", "+DETAILJAR_COLUMN_BTLAMOUNT +" = "+newbtlamt
-                +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
-        db.execSQL(query);
+        if (typecode==1)
+        {
+            Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARISSUED))+number1;
+            Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARRETURNED))+number2;
+            Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARAMOUNT))+amt;
+            query="UPDATE "+DETAILJAR_TABLE_NAME+
+                    " SET "+DETAILJAR_COLUMN_JARISSUED +" = "+newjarnoisued+
+                    ", "+DETAILJAR_COLUMN_JARRETURNED +" = "+newjarnoreturn+
+                    ", "+DETAILJAR_COLUMN_JARAMOUNT +" = "+newjaramt
+                    +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
+            db.execSQL(query);
+        }
+        else if (typecode==2)
+        {
+            Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARISSUED))+number1;
+            Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARRETURNED))+number2;
+            Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARAMOUNT))+amt;
+            query="UPDATE "+DETAILJAR_TABLE_NAME+
+                    " SET "+DETAILJAR_COLUMN_CJARISSUED +" = "+newjarnoisued+
+                    ", "+DETAILJAR_COLUMN_CJARRETURNED +" = "+newjarnoreturn+
+                    ", "+DETAILJAR_COLUMN_CJARAMOUNT +" = "+newjaramt
+                    +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
+            db.execSQL(query);
+        }
+        else if (typecode==3)
+        {
+            Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED))+number1;
+            Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLRETURNED))+number2;
+            Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT))+amt;
+            query="UPDATE "+DETAILJAR_TABLE_NAME+
+                    " SET "+DETAILJAR_COLUMN_BTLISSUED +" = "+newjarnoisued+
+                    ", "+DETAILJAR_COLUMN_BTLRETURNED +" = "+newjarnoreturn+
+                    ", "+DETAILJAR_COLUMN_BTLAMOUNT +" = "+newjaramt
+                    +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
+            db.execSQL(query);
+        }
+        else if (typecode==4)
+        {
+            Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED5))+number1;
+            Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLRETURNED5))+number2;
+            Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT5))+amt;
+            query="UPDATE "+DETAILJAR_TABLE_NAME+
+                    " SET "+DETAILJAR_COLUMN_BTLISSUED5 +" = "+newjarnoisued+
+                    ", "+DETAILJAR_COLUMN_BTLRETURNED5 +" = "+newjarnoreturn+
+                    ", "+DETAILJAR_COLUMN_BTLAMOUNT5 +" = "+newjaramt
+                    +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
+            db.execSQL(query);
+        }
+        else if (typecode==5)
+        {
+            Integer newjarnoisued=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED10))+number1;
+            Integer newjarnoreturn=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLRETURNED10))+number2;
+            Integer newjaramt=cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT10))+amt;
+            query="UPDATE "+DETAILJAR_TABLE_NAME+
+                    " SET "+DETAILJAR_COLUMN_BTLISSUED10 +" = "+newjarnoisued+
+                    ", "+DETAILJAR_COLUMN_BTLRETURNED10 +" = "+newjarnoreturn+
+                    ", "+DETAILJAR_COLUMN_BTLAMOUNT10 +" = "+newjaramt
+                    +" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofID;
+            db.execSQL(query);
+        }
     }
 
     protected String[] getcustdetail(String custname) {
@@ -421,12 +505,27 @@ public class MyDBHandler extends SQLiteOpenHelper {
             Cursor cursor1=db.rawQuery("SELECT * FROM "+DETAILJAR_TABLE_NAME+" WHERE "+DETAILJAR_COLUMN_CUSTOFID+" = "+custofid,null);
             cursor1.moveToFirst();
             if (!cursor1.isAfterLast()){
-                data[7]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARISSUED)));
-                data[8]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARRETURNED)));
-                data[9]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED)));
+                data[7]=String.valueOf(
+                                cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARISSUED))+
+                                cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARISSUED)));
+                data[8]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARRETURNED))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARRETURNED))
+                );
+                data[9]=String.valueOf(
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED5))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLISSUED10))
+                );
                 data[10]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLRETURNED)));
-                data[11]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARAMOUNT)));
-                data[12]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT)));
+                data[11]=String.valueOf(
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_JARAMOUNT))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_CJARAMOUNT))
+                );
+                data[12]=String.valueOf(
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT5))+
+                        cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_BTLAMOUNT10))
+                );
                 data[13]=String.valueOf(cursor1.getInt(cursor1.getColumnIndex(DETAILJAR_COLUMN_PAID)));
             }
             cursor1.close();
@@ -450,12 +549,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             data[1] = String.valueOf(getcustonid((cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_CUSTID)))));
             data[2] = cursor.getString(cursor.getColumnIndex(ENTRY_COLUMN_DATE));
-            data[3] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_NBTL)));
+            data[3] = String.valueOf(0);
             data[4] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_NJAR)));
             data[5] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_AMOUNT)));
             data[6] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_ID)));
             data[7] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_RNJAR)));
-            data[8] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_RNBTL)));
+            data[8] = String.valueOf(cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_TYCD)));
 
             BackgroundWork backgroundWork = new BackgroundWork(context);
             backgroundWork.execute(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8]);
@@ -514,9 +613,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
             Log.d(TAG,""+cursor.getString(cursor.getColumnIndex(ENTRY_COLUMN_DATE)));
             Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_AMOUNT)));
             Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_NJAR)));
-            Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_NBTL)));
             Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_RNJAR)));
-            Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_RNBTL)));
+            Log.d(TAG,""+cursor.getInt(cursor.getColumnIndex(ENTRY_COLUMN_TYCD)));
             cursor.moveToNext();
         }
 
@@ -548,30 +646,60 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public Integer getbtlprc(String s) {
+    public Integer getbtlprc(String s, Integer type) {
         String query="SELECT * FROM "+CUSTOMER_TABLE_NAME+" WHERE "+CUSTOMER_COLUMN_NAME+" = '"+s+"'";
         SQLiteDatabase db=getReadableDatabase();
         Cursor cursor=db.rawQuery(query,null);
         cursor.moveToFirst();
         Integer prc=-1;
-        while (!cursor.isAfterLast())
+        if (type==1)
         {
-            prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_BPRC));
-            cursor.moveToNext();
+            while (!cursor.isAfterLast())
+            {
+                prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_BPRC));
+                cursor.moveToNext();
+            }
+        }
+        else if (type==2)
+        {
+            while (!cursor.isAfterLast())
+            {
+                prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_BPRC5));
+                cursor.moveToNext();
+            }
+        }
+        else if (type==3)
+        {
+            while (!cursor.isAfterLast())
+            {
+                prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_BPRC10));
+                cursor.moveToNext();
+            }
         }
         return prc;
     }
 
-    public Integer getjarprc(String s) {
+    public Integer getjarprc(String s,Integer type) {
         String query="SELECT * FROM "+CUSTOMER_TABLE_NAME+" WHERE "+CUSTOMER_COLUMN_NAME+" = '"+s+"'";
         SQLiteDatabase db=getReadableDatabase();
         Cursor cursor=db.rawQuery(query,null);
         cursor.moveToFirst();
         Integer prc=-1;
-        while (!cursor.isAfterLast())
+        if (type==1)
         {
-            prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_JARP));
-            cursor.moveToNext();
+            while (!cursor.isAfterLast())
+            {
+                prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_JARP));
+                cursor.moveToNext();
+            }
+        }
+        else if (type==2)
+        {
+            while (!cursor.isAfterLast())
+            {
+                prc=cursor.getInt(cursor.getColumnIndex(CUSTOMER_COLUMN_JARPC));
+                cursor.moveToNext();
+            }
         }
         return prc;
     }
@@ -612,7 +740,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return rid;
     }
 
-    public void makeentry(String custname,  int number1, int number2,int number3, int number4, int amount) {
+    public void makeentry(String custname,  int number1, int number2,int typecode, int amount) {
         Integer custofid=getcustofid(custname);
         if (custofid == 0)
         {
@@ -621,10 +749,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         ContentValues values=new ContentValues();
         values.put(ENTRY_COLUMN_CUSTID,custofid);
-        values.put(ENTRY_COLUMN_NBTL,number1);
-        values.put(ENTRY_COLUMN_NJAR,number2);
-        values.put(ENTRY_COLUMN_RNBTL,number3);
-        values.put(ENTRY_COLUMN_RNJAR,number4);
+        values.put(ENTRY_COLUMN_NJAR,number1);
+        values.put(ENTRY_COLUMN_RNJAR,number2);
+        values.put(ENTRY_COLUMN_TYCD,typecode);
         values.put(ENTRY_COLUMN_AMOUNT,amount);
 
         SQLiteDatabase db=getWritableDatabase();
@@ -658,7 +785,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return custofid;
     }
 
-    protected void addcustomer(Integer onid, String company, String name, String mob, String email, String add, String route, Integer flit, Integer jarpr, boolean status) {
+    protected void addcustomer(Integer onid, String company, String name, String mob, String email, String add, String route, Integer flit, Integer jarpr, Integer flit5, Integer flit10, Integer jarprc, boolean status) {
         ContentValues values=new ContentValues();
 
         values.put(CUSTOMER_COLUMN_ONID,onid);
@@ -669,7 +796,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(CUSTOMER_COLUMN_ADDRESS,add);
         values.put(CUSTOMER_COLUMN_ROUTE,route);
         values.put(CUSTOMER_COLUMN_BPRC,flit);
+        values.put(CUSTOMER_COLUMN_BPRC5,flit5);
+        values.put(CUSTOMER_COLUMN_BPRC10,flit10);
         values.put(CUSTOMER_COLUMN_JARP,jarpr);
+        values.put(CUSTOMER_COLUMN_JARPC,jarprc);
 
         SQLiteDatabase db=getWritableDatabase();
         db.insert(CUSTOMER_TABLE_NAME,null,values);

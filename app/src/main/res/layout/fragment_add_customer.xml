@@ -137,85 +137,67 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox"
-        android:layout_alignStart="@+id/checkBox"
-        android:layout_below="@+id/textView9"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="24dp"
         android:text="Route"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/editText7"
+        android:layout_alignLeft="@+id/textView9"
+        android:layout_alignStart="@+id/textView9" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText8"
-        android:layout_alignEnd="@+id/editText7"
+        android:contentDescription="Select Route"
+        android:layout_alignBottom="@+id/textView10"
         android:layout_alignLeft="@+id/editText7"
-        android:layout_alignRight="@+id/editText7"
         android:layout_alignStart="@+id/editText7"
-        android:contentDescription="Select Route" />
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox2"
-        android:layout_alignStart="@+id/checkBox2"
-        android:layout_below="@+id/textView10"
-        android:layout_marginTop="25dp"
-        android:text="5 lit Bottle" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView9"
-        android:layout_alignRight="@+id/textView9"
-        android:layout_below="@+id/checkBox"
-        android:text="Jar" />
+        android:layout_alignRight="@+id/editText7"
+        android:layout_alignEnd="@+id/editText7" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox2"
-        android:layout_alignStart="@+id/checkBox2"
-        android:layout_below="@+id/checkBox2"
-        android:layout_marginTop="16dp"
-        android:text="Save" />
+        android:text="Save"
+        android:layout_below="@+id/editText9"
+        android:layout_alignLeft="@+id/textView72"
+        android:layout_alignStart="@+id/textView72" />
 
     <EditText
         android:id="@+id/editText8"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_alignLeft="@+id/spinner"
-        android:layout_alignStart="@+id/spinner"
         android:ems="10"
+        android:hint="1 ltr."
         android:inputType="number"
-        android:text="15" />
+        android:layout_alignBaseline="@+id/textView71"
+        android:layout_alignBottom="@+id/textView71"
+        android:layout_alignLeft="@+id/spinner"
+        android:layout_alignStart="@+id/spinner" />
 
     <EditText
         android:id="@+id/editText9"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/checkBox2"
-        android:layout_alignLeft="@+id/editText8"
-        android:layout_alignStart="@+id/editText8"
         android:ems="10"
+        android:hint="Normal"
         android:inputType="number"
-        android:text="20" />
+        android:layout_alignBaseline="@+id/textView72"
+        android:layout_alignBottom="@+id/textView72"
+        android:layout_alignLeft="@+id/editText8"
+        android:layout_alignStart="@+id/editText8" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Company Name"
+        android:textStyle="bold"
         android:layout_alignBaseline="@+id/editText4"
         android:layout_alignBottom="@+id/editText4"
-        android:layout_alignEnd="@+id/checkBox"
-        android:layout_alignRight="@+id/checkBox"
-        android:text="Company Name"
-        android:textStyle="bold" />
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
 
     <EditText
         android:id="@+id/editText4"
@@ -227,26 +209,68 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textView38"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText9"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_alignBaseline="@+id/editText15"
+        android:layout_alignBottom="@+id/editText15"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_toEndOf="@+id/editText15"
+        android:layout_toRightOf="@+id/editText15"
+        android:ems="10"
+        android:hint="10 ltr."
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/editText15"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText8"
+        android:layout_alignBottom="@+id/editText8"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:layout_toEndOf="@+id/editText8"
         android:layout_toRightOf="@+id/editText8"
-        android:text="Rs"
-        android:textStyle="bold" />
+        android:ems="10"
+        android:hint="5 ltr."
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/editText16"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText9"
+        android:layout_alignBottom="@+id/editText9"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/editText9"
+        android:layout_toRightOf="@+id/editText9"
+        android:ems="10"
+        android:hint="  Cold"
+        android:inputType="numberSigned" />
 
     <TextView
-        android:id="@+id/textView39"
+        android:id="@+id/textView71"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText9"
-        android:layout_alignLeft="@+id/textView38"
-        android:layout_alignStart="@+id/textView38"
-        android:text="Rs"
+        android:layout_marginTop="34dp"
+        android:text="Bottle"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView10"
+        android:layout_alignLeft="@+id/textView10"
+        android:layout_alignStart="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView72"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView71"
+        android:layout_alignStart="@+id/textView71"
+        android:layout_below="@+id/textView71"
+        android:layout_marginTop="21dp"
+        android:text="Jar"
         android:textStyle="bold" />
 
 </RelativeLayout>

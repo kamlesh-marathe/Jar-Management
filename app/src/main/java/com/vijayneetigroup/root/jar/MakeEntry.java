@@ -38,30 +38,36 @@ public class MakeEntry extends Fragment {
         // Required empty public constructor
     }
 
-    CheckBox checkBox1,checkBox2;
-    EditText editText1,editText2,editText3,editText4;
+    EditText editText1,editText2;
     Button button;
     AutoCompleteTextView autoCompleteTextView;
-    TextView textView1,textView2,textView3;
-    Integer jprc,bprc;
+    TextView textView1;
+    Integer jprc,bprc,jcprc,bprc5,bprc10,tval;
+    Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_make_entry, container, false);
-//        spinner = (Spinner) view.findViewById(R.id.spinner3);
-        checkBox1 = (CheckBox) view.findViewById(R.id.checkBox3);
-        checkBox2 = (CheckBox) view.findViewById(R.id.checkBox4);
-        editText1 = (EditText) view.findViewById(R.id.editText11);
-        editText2 = (EditText) view.findViewById(R.id.editText12);
-        editText3 = (EditText) view.findViewById(R.id.editText13);
-        editText4 = (EditText) view.findViewById(R.id.editText14);
-        textView1 = (TextView) view.findViewById(R.id.textView31);
-        textView2 = (TextView) view.findViewById(R.id.textView32);
-        textView3 = (TextView) view.findViewById(R.id.textView33);
+
+        editText1 = (EditText) view.findViewById(R.id.editText3);
+        editText2 = (EditText) view.findViewById(R.id.editText11);
+
+        textView1 = (TextView) view.findViewById(R.id.textView37);
+
+        spinner = (Spinner) view.findViewById(R.id.spinner3);
+        String[] typeitem = {"Normal Jar","Cold Jar","1 Lit Btl","5 Lit Btl","10 Lit Btl"};
+        ArrayAdapter<String> adapter1= new ArrayAdapter<String>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item,typeitem);
+        spinner.setAdapter(adapter1);
+
         jprc=0;
+        jcprc=0;
         bprc=0;
+        bprc5=0;
+        bprc10=0;
+        tval=0;
+
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,45 +82,14 @@ public class MakeEntry extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 int Number1 = 0;
-                int Number2 = 0;
 
-                if (!(editText1.length() == 0 || editText1.equals("") || editText1 == null) && checkBox1.isChecked())
+                if (!(editText1.length() == 0 || editText1.equals("") || editText1 == null))
                     Number1=Integer.valueOf(s.toString());
 
-                if (!(editText2.length() == 0 || editText2.equals("") || editText2 == null) && checkBox2.isChecked())
-                    Number2=Integer.valueOf(editText2.getText().toString());
-
                 textView1.setText(""+(Number1*bprc)+" Rs");
-                textView3.setText("Total "+(Number1*bprc+Number2*jprc)+" Rs");
             }
         });
 
-        editText2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int Number1 = 0;
-                int Number2 = 0;
-
-                if (!(editText1.length() == 0 || editText1.equals("") || editText1 == null) && checkBox1.isChecked())
-                    Number1=Integer.valueOf(editText1.getText().toString());
-
-                if (!(editText2.length() == 0 || editText2.equals("") || editText2 == null) && checkBox2.isChecked())
-                    Number2=Integer.valueOf(s.toString());
-
-                textView2.setText(""+(Number2*jprc)+" Rs");
-                textView3.setText("Total "+(Number1*bprc+Number2*jprc)+" Rs");
-            }
-        });
 
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView);
         button = (Button) view.findViewById(R.id.button6);
@@ -136,8 +111,38 @@ public class MakeEntry extends Fragment {
 //        });
 //
 //        ArrayAdapter<String> adapter1=adapter;
-        checkBox1.setEnabled(false);
-        checkBox2.setEnabled(false);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinner.getSelectedItem().toString().equals("Normal Jar"))
+                {
+                    tval=jprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("Cold Jar"))
+                {
+                    tval=bprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("1 Lit Btl"))
+                {
+                    tval=jcprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("5 Lit Btl"))
+                {
+                    tval=bprc5;
+                }
+                else if (spinner.getSelectedItem().toString().equals("10 Lit Btl"))
+                {
+                    tval=bprc10;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         autoCompleteTextView.setDropDownWidth((getSystem().getDisplayMetrics().widthPixels-100));
         autoCompleteTextView.setThreshold(0);
         autoCompleteTextView.setAdapter(adapter);
@@ -146,59 +151,39 @@ public class MakeEntry extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 editText1.setText("0");
                 editText2.setText("0");
-                jprc=dbHandler.getjarprc(autoCompleteTextView.getText().toString());
-                bprc=dbHandler.getbtlprc(autoCompleteTextView.getText().toString());
-                if (jprc==-1 && bprc==-1)
+                jprc=dbHandler.getjarprc(autoCompleteTextView.getText().toString(),1);
+                bprc=dbHandler.getbtlprc(autoCompleteTextView.getText().toString(),1);
+
+                jcprc=dbHandler.getjarprc(autoCompleteTextView.getText().toString(),2);
+                bprc5=dbHandler.getbtlprc(autoCompleteTextView.getText().toString(),2);
+                bprc10=dbHandler.getbtlprc(autoCompleteTextView.getText().toString(),3);
+
+                if (spinner.getSelectedItem().toString().equals("Normal Jar"))
+                {
+                    tval=jprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("Cold Jar"))
+                {
+                    tval=bprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("1 Lit Btl"))
+                {
+                    tval=jcprc;
+                }
+                else if (spinner.getSelectedItem().toString().equals("5 Lit Btl"))
+                {
+                    tval=bprc5;
+                }
+                else if (spinner.getSelectedItem().toString().equals("10 Lit Btl"))
+                {
+                    tval=bprc10;
+                }
+
+                if (jprc==-1 || bprc==-1)
                     Toast.makeText(getContext(), "Invalid Customer Name", Toast.LENGTH_SHORT).show();
                 else
                     button.setEnabled(true);
-                if (jprc==0)
-                    checkBox2.setEnabled(false);
-                else
-                    checkBox2.setEnabled(true);
-                if (bprc==0)
-                    checkBox1.setEnabled(false);
-                else
-                    checkBox1.setEnabled(true);
-            }
-        });
 
-        editText1.setEnabled(false);
-        editText2.setEnabled(false);
-        editText3.setEnabled(false);
-        editText4.setEnabled(false);
-        checkBox1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBox1.isChecked())
-                {
-                    editText1.setEnabled(true);
-                    editText3.setEnabled(true);
-                }
-                else
-                {
-                    editText1.setText("0");
-                    editText3.setText("0");
-                    editText1.setEnabled(false);
-                    editText3.setEnabled(false);
-                }
-            }
-        });
-        checkBox2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBox2.isChecked())
-                {
-                    editText2.setEnabled(true);
-                    editText4.setEnabled(true);
-                }
-                else
-                {
-                    editText2.setText("0");
-                    editText4.setText("0");
-                    editText2.setEnabled(false);
-                    editText4.setEnabled(false);
-                }
             }
         });
 
@@ -209,29 +194,49 @@ public class MakeEntry extends Fragment {
             public void onClick(View v) {
                 int Number1 = 0;
                 int Number2 = 0;
-                int Number3 = 0;
-                int Number4 = 0;
+                int rate=0;
 
-                if (!(editText1.length() == 0 || editText1.equals("") || editText1 == null) && checkBox1.isChecked() && checkBox1.isEnabled())
+                if (!(editText1.length() == 0 || editText1.equals("") || editText1 == null))
                     Number1=Integer.valueOf(editText1.getText().toString());
 
-                if (!(editText2.length() == 0 || editText2.equals("") || editText2 == null) && checkBox2.isChecked() && checkBox2.isEnabled())
+                if (!(editText2.length() == 0 || editText2.equals("") || editText2 == null))
                     Number2=Integer.valueOf(editText2.getText().toString());
 
-                if (!(editText3.length() == 0 || editText3.equals("") || editText3 == null) && checkBox1.isChecked() && checkBox1.isEnabled())
-                    Number3=Integer.valueOf(editText3.getText().toString());
-
-                if (!(editText4.length() == 0 || editText4.equals("") || editText4 == null) && checkBox2.isChecked() && checkBox2.isEnabled())
-                    Number4=Integer.valueOf(editText4.getText().toString());
 
 //                Log.d(TAG,"Nunbers "+Number3+" "+Number4);
-                int Amount= Number1*bprc+Number2*jprc;
+                int Amount= Number1*tval;
+                int typecode=0;
+                if (spinner.getSelectedItem().toString().equals("Normal Jar"))
+                {
+                    typecode=1;
+                }
+                else if (spinner.getSelectedItem().toString().equals("Cold Jar"))
+                {
+                    typecode=2;
+                }
+                else if (spinner.getSelectedItem().toString().equals("1 Lit Btl"))
+                {
+                    typecode=3;
+                }
+                else if (spinner.getSelectedItem().toString().equals("5 Lit Btl"))
+                {
+                    typecode=4;
+                }
+                else if (spinner.getSelectedItem().toString().equals("10 Lit Btl"))
+                {
+                    typecode=5;
+                }
+
                 String custname=autoCompleteTextView.getText().toString();
                 Toast.makeText(view.getContext(), "Data Submitted...", Toast.LENGTH_SHORT).show();
-                dbHandler.makeentry(custname,Number1,Number2,Number3,Number4,Amount);
-                dbHandler.getnumber("bdelivered",Number1);
-                dbHandler.getnumber("jdelivered",Number2);
-                dbHandler.updatecustdetail(custname,Number1,Number2,Number3,Number4,Number1*bprc,Number2*jprc);
+                dbHandler.makeentry(custname,Number1,Number2,typecode,Amount);
+
+                if (typecode!=1 && typecode!=2)
+                    dbHandler.getnumber("bdelivered",Number1);
+                else
+                    dbHandler.getnumber("jdelivered",Number1);
+
+                dbHandler.updatecustdetail(custname,Number1,Number2,typecode,Number1*tval);
 
                 FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
                 fragmentTransaction.detach(MakeEntry.this).attach(MakeEntry.this).commit();

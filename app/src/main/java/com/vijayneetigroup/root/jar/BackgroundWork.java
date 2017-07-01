@@ -241,10 +241,9 @@ public class BackgroundWork extends AsyncTask<String,Void,String> {
                 BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
                 String postdata=URLEncoder.encode("cid","UTF-8")+"="+URLEncoder.encode(data[1],"UTF-8")+"&"
                         +URLEncoder.encode("bdate","UTF-8")+"="+URLEncoder.encode(data[2],"UTF-8")+"&"
-                        +URLEncoder.encode("Nbtls","UTF-8")+"="+URLEncoder.encode(data[3],"UTF-8")+"&"
                         +URLEncoder.encode("Njars","UTF-8")+"="+URLEncoder.encode(data[4],"UTF-8")+"&"
-                        +URLEncoder.encode("RNbtls","UTF-8")+"="+URLEncoder.encode(data[8],"UTF-8")+"&"
                         +URLEncoder.encode("RNjars","UTF-8")+"="+URLEncoder.encode(data[7],"UTF-8")+"&"
+                        +URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(data[8],"UTF-8")+"&"
                         +URLEncoder.encode("Amount","UTF-8")+"="+URLEncoder.encode(data[5],"UTF-8");
                 bufferedWriter.write(postdata);
                 bufferedWriter.flush();
