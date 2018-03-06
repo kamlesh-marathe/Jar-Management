@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
                     backgroundWork.setOnTaskFinishedEvent(new BackgroundWork.OnTaskExecutionFinished() {
                         @Override
                         public void OnTaskFihishedEvent(String Result) {
-                            if (Result.equals("User_Found"))
+                            if (!Result.equals("USER_NOT_EXIST"))
                             {
                                 syncdata();
                                 dbHandler.adduser(username,password);
